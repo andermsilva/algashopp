@@ -1,16 +1,34 @@
 import React from 'react';
-import {Wrapper, Container} from './App.styles'
-
+import AppContainer from '../AppContainer';
+import AppHeader from '../AppHeader';
+import { Container, Wrapper } from './App.styles'
 
 function App(){
-    return(
 
-        <Wrapper >
+    return(
+         <Wrapper >
+      
+         <Container>
+           <AppHeader/>
+           <AppContainer
+              left={<div>
+                  Produtos disponiveis
+              </div>
+
+              }
+              middle={<div>
+                   sua lista de comproas
+              </div>}
+              right={<div>
+
+                  estatisticas
+              </div>}
            
-           <Container >
-               todo: view
-           </Container>
+           />
+         </Container>
+
         </Wrapper>
     );
 }
+
 export default App;
