@@ -39,7 +39,7 @@ function App(){
 
               }
               middle={<div>
-                   sua lista de comproas
+                   sua lista de  comproas
 
                    <Checkbox 
                     value={false}
