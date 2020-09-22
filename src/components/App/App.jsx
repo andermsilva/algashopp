@@ -1,65 +1,65 @@
-import React, { useEffect, useState } from 'react';
-import Checkbox from '../../shared/Checkbox';
+import React, {  useEffect, useState } from 'react';
 import LineChart from '../../shared/LineChart';
 import AppContainer from '../AppContainer';
 import AppHeader from '../AppHeader';
+import ShopppingList from '../ShoppingList';
 import { Container, Wrapper } from './App.styles'
+import productsMock from '../../mocks/products.json';
 
 function App(){
-    const [lettuce,setLettuce] = useState();
-   /*  const [heathy, setHeathy] = useState(20);
-    useEffect(
-      function(){
-
-        setTimeout(()=>{
-          setHeathy(80);
-        },5000)
-
-      },[]); */
       const colors = ['#62cbc6','#00abac','#006073','#004d61'];
+  
+      const [products,setProducts] = useState(productsMock.products);
+      const [SelProducts,setSelProducts] = useState([]);
 
+      useEffect(()=>{
+          const newSelProducts = products.filter(pro => pro.checked);
+          setSelProducts(newSelProducts);
+
+      },[products]);
+      
+     function handdleToggle(id,checked, name){
+        const newProducts= products.map(pro=>
+          pro.id ===id ?
+            {...pro, checked: !pro.checked}
+          :pro
+        );
+        setProducts(newProducts);
+        
+     }
     return(
          <Wrapper >
       
          <Container>
            <AppHeader/>
            <AppContainer
-              left={<div>
-                  Produtos disponiveis:
-                  <Checkbox 
-                  value={lettuce}
-                    title ='Alface'
-                    onClick={() => setLettuce(!lettuce)}
-                  />
-                  <Checkbox 
-                    value={false}
-                    title ='Arroz'
-                  />
-              </div>
+              left={<ShopppingList title='Produtos disponíveis'
+                 
+                  products = {products}
+                  onTaggle={handdleToggle}
+                  
+                />
 
               }
-              middle={<div>
-                   sua lista de  comproas
+              middle={<ShopppingList title='Sua Lista de Compras'
+                   
+              products = {SelProducts}
+              onTaggle={handdleToggle}
 
-                   <Checkbox 
-                    value={false}
-                    title ='Arroz'
-                  />
-
-              </div>}
+              />}
               right={<div>
                   estatisticas
 
                   <LineChart 
                      color={colors[0]}
                      title='Saudavel'
-                     percente = {23}
+                     percente = {20}
                   />
 
                   <LineChart 
                      color={colors[1]}
                      title='Não tão Saudavel assim'
-                     percente = {43}
+                     percente = {40}
                   />
 
                    <LineChart 
