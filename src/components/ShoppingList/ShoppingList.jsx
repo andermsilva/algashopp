@@ -15,10 +15,7 @@ function ShopppingList({title,  products,onTaggle}){
                   value = {pro.checked}  
                   title={pro.name}
                    onClick={()=> onTaggle(pro.id ,pro.checked, pro.name)} 
-                           
-                 />)
-                       
-                 
+                />)
                  :<pre>Nenhum item encontrado</pre>
              }
              
