@@ -6,6 +6,7 @@ import ShopppingList from '../ShoppingList';
 import { Container, Wrapper } from './App.styles'
 import productsMock from '../../mocks/products.json';
 import extraPercentage from '../../utils/extractPercentage';
+import Calculator from '../Calculator';
 
 function App(){
       const colors = ['#62cbc6','#00abac','#006073','#004d61'];
@@ -100,13 +101,13 @@ function App(){
                   />
                 <div style={{marginTop:12}}>
                     <h2 style={{fontWeight:400, fontSize:12, color: '#00364a'}}>
-                     previsão de gastos:
+                        previsão de gastos:
+                     </h2>
                       <div style={{fontSize:24}}>
                        {totalPrice.toLocaleString('pt-br',{minimumFractionDigits:2,
                                                        style: 'currency',currency: 'BRL'})}
                       </div>
-                    </h2>
-                  
+                    <Calculator/>
                 </div>
               </div>}
            
