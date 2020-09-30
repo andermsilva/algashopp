@@ -1,41 +1,30 @@
 import React, {  useEffect, useState } from 'react';
+import { Container, Wrapper } from './App.styles'
 import LineChart from '../../shared/LineChart';
+
 import AppContainer from '../AppContainer';
 import AppHeader from '../AppHeader';
 import ShopppingList from '../ShoppingList';
-import { Container, Wrapper } from './App.styles'
-import productsMock from '../../mocks/products.json';
+
+//import productsMock from '../../mocks/products.json';
 import extraPercentage from '../../utils/extractPercentage';
 import Calculator from '../Calculator';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectAllProducts, selectSelectedProducts, selectSelectedProductTotalPrice } from '../../store/Products/Products.selectors';
+import toggleProduct from '../../store/Products/Products.action';
 
 function App(){
-      const colors = ['#62cbc6','#00abac','#006073','#004d61'];
+
+     const dispatch = useDispatch() ;
+     const colors = ['#62cbc6','#00abac','#006073','#004d61'];
+     const products = useSelector(selectAllProducts); 
+   
+     const [SelProducts,setSelProducts] = useState([]);
+     const selectedProducts = useSelector(selectSelectedProducts);
+     const totalPrice = useSelector(selectSelectedProductTotalPrice);
   
-      const [products,setProducts] = useState(productsMock.products);
-      const [SelProducts,setSelProducts] = useState([]);
-      const[totalPrice, setTotalPrice] = useState(0)
-      
-      useEffect(()=>{
-          const newSelProducts = products
-          .filter(pro => pro.checked);
-          setSelProducts(newSelProducts);
-
-      },[products]);
-
-      useEffect(()=> {
-         const total = SelProducts
-              .map(pro => pro.price)
-              .reduce((a,b)=> a+b, 0);
-          setTotalPrice(total);
-      },[SelProducts]);
-      
-     function handdleToggle(id,checked, name){
-        const newProducts= products.map(pro=>
-          pro.id ===id ?
-            {...pro, checked: !pro.checked}
-          :pro
-        );
-        setProducts(newProducts);
+     function handdleToggle(id){
+         dispatch(toggleProduct(id));
         
      }
     return(
@@ -54,7 +43,7 @@ function App(){
               }
               middle={<ShopppingList title='Sua Lista de Compras'
                    
-              products = {SelProducts}
+              products = {selectedProducts}
               onTaggle={handdleToggle}
 
               />}
@@ -65,8 +54,8 @@ function App(){
                      color={colors[0]}
                      title='Saudavel'
                      percente = {extraPercentage(
-                       SelProducts.length,
-                       SelProducts.filter(product=>
+                      selectedProducts.length,
+                      selectedProducts.filter(product=>
                           product.tags.includes('healthy')).length
                      )}
                   />
@@ -75,8 +64,8 @@ function App(){
                      color={colors[1]}
                      title='Não tão Saudavel assim'
                      percente = {extraPercentage(
-                      SelProducts.length,
-                      SelProducts.filter(product=>
+                      selectedProducts.length,
+                      selectedProducts.filter(product=>
                          product.tags.includes('junk')).length
                     )}
                   />
@@ -85,8 +74,8 @@ function App(){
                      color={colors[2]}
                      title='Limpeza'
                      percente = {extraPercentage(
-                      SelProducts.length,
-                      SelProducts.filter(product=>
+                      selectedProducts.length,
+                      selectedProducts.filter(product=>
                          product.tags.includes('cleaning')).length
                     )}
                   />
@@ -94,8 +83,8 @@ function App(){
                      color={colors[3]}
                      title='Outros'
                      percente = {extraPercentage(
-                      SelProducts.length,
-                      SelProducts.filter(product=>
+                      selectedProducts.length,
+                      selectedProducts.filter(product=>
                          product.tags.includes('others')).length
                     )}
                   />
