@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from 'react';
+import React from 'react';
 import { Container, Wrapper } from './App.styles'
 import LineChart from '../../shared/LineChart';
 
@@ -10,16 +10,15 @@ import ShopppingList from '../ShoppingList';
 import extraPercentage from '../../utils/extractPercentage';
 import Calculator from '../Calculator';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectAllProducts, selectSelectedProducts, selectSelectedProductTotalPrice } from '../../store/Products/Products.selectors';
+import { selectSelectedProducts, selectSelectedProductTotalPrice } from '../../store/Products/Products.selectors';
 import toggleProduct from '../../store/Products/Products.action';
 
 function App(){
 
      const dispatch = useDispatch() ;
      const colors = ['#62cbc6','#00abac','#006073','#004d61'];
-     const products = useSelector(selectAllProducts); 
+     //const products = useSelector(selectAllProducts); 
    
-     const [SelProducts,setSelProducts] = useState([]);
      const selectedProducts = useSelector(selectSelectedProducts);
      const totalPrice = useSelector(selectSelectedProductTotalPrice);
   
@@ -28,24 +27,20 @@ function App(){
         
      }
     return(
-         <Wrapper >
+         <Wrapper >                  
       
          <Container>
            <AppHeader/>
            <AppContainer
               left={<ShopppingList title='Produtos disponíveis'
-                 
-                  products = {products}
-                  onTaggle={handdleToggle}
-                  
-                />
+                 onTaggle={handdleToggle}
+               />
 
               }
-              middle={<ShopppingList title='Sua Lista de Compras'
-                   
-              products = {selectedProducts}
-              onTaggle={handdleToggle}
 
+              middle={<ShopppingList title='Sua Lista de Compras'
+               onTaggle={handdleToggle}
+               displayOnlySelected
               />}
               right={<div>
                   estatisticas

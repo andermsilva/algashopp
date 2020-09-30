@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import Checkbox from '../../shared/Checkbox';
-import { selectAllProducts } from '../../store/Products/Products.selectors';
+import { selectAllProducts, selectSelectedProducts} from '../../store/Products/Products.selectors';
 import { Wrapper,Title,Array }from './Shopping.styles'
-function ShopppingList({title,  products,onTaggle}){
-    const productsFromRedux = useSelector(selectAllProducts);
-    useEffect(()=> console.table(productsFromRedux),
-           [productsFromRedux]
-           
-        );
-    //console.log(productsFromRedux,[productsFromRedux])
+function ShopppingList({title,onTaggle, displayOnlySelected}){
+
+
+    const products= useSelector(                     
+            displayOnlySelected ?
+              selectSelectedProducts :
+                 selectAllProducts
+            );
+
     return(
         <Wrapper>
             <Title>
